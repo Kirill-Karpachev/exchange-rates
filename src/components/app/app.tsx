@@ -6,10 +6,11 @@ import { URL_IMAGE } from "../../utils/const";
 import SelectUI from "../../ui/selects/selects";
 
 import styles from "./app.module.css";
+import CardRate from "../card-rate/card-rate";
+import Loading from "../loading/loading";
 
 const App: FC = (): JSX.Element => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const countryData: any = {};
+  const countryData: { [key: string]: string } = {};
   const [rate, setRate] = useState("");
   const [latest, setLatest] = useState({});
   const [symbols, setSymbols] = useState<{ [key: string]: string }>({});
@@ -47,14 +48,14 @@ const App: FC = (): JSX.Element => {
   return (
     <>
       {isLoadingSymbol ? (
-        <p className={styles.loading}>Loading...</p>
+        <Loading />
       ) : (
         <div className={styles.app}>
           <h1>Exchange Rates</h1>
           <SelectUI symbols={symbols} rate={rate} setRate={setRate} />
           {rate &&
             (isLoading ? (
-              <p className={styles.loading}>Loading...</p>
+              <Loading />
             ) : (
               //ToDo: Вынести в отдельный компонент
               <section className={styles.container}>
@@ -68,18 +69,12 @@ const App: FC = (): JSX.Element => {
                 </div>
                 <ul className={styles.list}>
                   {arrLatest.map((item, index) => (
-                    <li className={styles.list_item} key={index}>
-                      <div className={styles.list_country}>
-                        <img
-                          className={styles.list_img}
-                          src={`${URL_IMAGE}/16x12/${countryData[item[0]]}.png`}
-                          alt={countryData[item[0]]}
-                        />
-                        <p className={styles.list_name}>{symbols[item[0]]}</p>
-                      </div>
-
-                      <p className={styles.list_number}>{Number(item[1])}</p>
-                    </li>
+                    <CardRate
+                      key={index}
+                      countryData={countryData}
+                      item={item}
+                      symbols={symbols}
+                    />
                   ))}
                 </ul>
               </section>

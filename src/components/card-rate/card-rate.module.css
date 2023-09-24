@@ -1,0 +1,22 @@
+.item {
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 18px;
+}
+
+.item_country {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.item_name {
+  margin: 0;
+}
+
+.item_number {
+  margin: 0;
+}
